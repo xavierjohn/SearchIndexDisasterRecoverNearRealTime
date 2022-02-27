@@ -1,0 +1,12 @@
+﻿{
+  "profiles": {
+    "SearchIndexUpdateWebJob": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "keyVaultSettings:keyVaultName": "weatherwus2"
+      }
+    }
+  }
+}
