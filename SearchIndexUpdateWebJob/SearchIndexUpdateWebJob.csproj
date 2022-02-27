@@ -17,4 +17,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if $(ConfigurationName) == Release (powershell Compress-Archive -Path '$(TargetDir)*.dll', '$(TargetDir)*.json', '$(TargetDir)*.exe' -DestinationPath '$(ProjectDir)PublishOutput\SearchIndexUpdateWebJob.zip' -Force)" />
+  </Target>
 </Project>
