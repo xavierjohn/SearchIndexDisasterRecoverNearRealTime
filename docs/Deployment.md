@@ -36,7 +36,7 @@ be able to connect to the event hub.
 Add a secret to Key Vault in each region.
 
 |Name|Value|
-| --- | --- | ---|
+| --- | --- |
 |SearchServiceKey| Search Index key for the respective region|
 
 Go to KeyVault `Access Policies` and  `Add Access Policy`.
@@ -57,7 +57,7 @@ Example:
 The following settings must be set and the values will be different in each region.
 
 |Key|Value|
-| --- | --- | --- |
+| --- | --- |
 |AZURE_CLIENT_ID| Client ID of the Managed Identity|
 |environmentSettings:region|Respective region like wus2 & eus2|
 |keyVaultSettings:keyVaultName|Key Vault name|
