@@ -1,5 +1,5 @@
 # Deployment
-Deployment requires two resource groups in two different zones. I used East US 2 and West US 2.
+Deployment requires two resource groups in two different zones. I used East US 2 and West US 2 in this example.
 
 The following resources are needed in both the regions.
 1)	Azure Cognitive Search Index
@@ -11,7 +11,7 @@ The following resources are needed in both the regions.
 
 ## Event Hub Namespace configuration
 Make sure the event hub namespace is Geo Paired first so that 
-the action below will affect both the event hubs. You also need to take the action
+the action below gets applied on both the event hubs. You also need to take the action
 on the primary node so that it gets reflected on the secondary node.
 
 Example:
@@ -20,11 +20,11 @@ Example:
 
 Create an Event Hub with name "city-temperature"
 
-Create two consumer groups to the event hub like `index-worker-{region}`.
-Add a consumer group localtest for running on your local machine.
+Create two consumer groups for the event hub. Example `index-worker-{region}`.
+Add another consumer group `localtest` for your local machine.
 
-**Important:** Add User Managed Identity of **both** regions as `Azure Event Hubs Data Receiver` in both regions.
-The event hub alias will show both as inherited permission.
+**Important:** Add the User Managed Identities of **both** regions with the role `Azure Event Hubs Data Receiver` to the EventHubs in both regions.
+The event hub alias will display as inherited permission as below.
 
 ![Managed Identity on event hub Alias](EventHubAliasHasBothManagedIdentities.jpg "Managed Identity on event hub Alias")
 
@@ -36,11 +36,12 @@ be able to connect to the event hub.
 Add a secret to Key Vault in each region.
 
 |Name|Value|
---- | --- | ---|
+| --- | --- | ---|
 |SearchServiceKey| Search Index key for the respective region|
 
 Go to KeyVault `Access Policies` and  `Add Access Policy`.
-Associate managed identity with Key Vault with `Get` and `List` permission for secrets.
+Associate managed identity with the Key Vault, with `Get` and `List` permission for `Secret Management Operations`.
+
 ![Associate the Managed Identity Key Vault](AssignManagedIdentityToKeyVault.jpg "Associate the Managed Identity")
 
 ## Storage account configuration
@@ -56,7 +57,7 @@ Example:
 The following settings must be set and the values will be different in each region.
 
 |Key|Value|
---- | --- | ---|
+| --- | --- | --- |
 |AZURE_CLIENT_ID| Client ID of the Managed Identity|
 |environmentSettings:region|Respective region like wus2 & eus2|
 |keyVaultSettings:keyVaultName|Key Vault name|
@@ -76,3 +77,8 @@ Install the webjob by uploading the zip file created by the SearchIndexUpdateWeb
 [SearchIndexUpdateWebJob.zip](../SearchIndexUpdateWebJob/PublishOutput/SearchIndexUpdateWebJob.zip)
 
 ![Add webjob](AddWebJob.jpg "Add webjob")
+
+
+Once you have repeated the process for both regions, your setup is complete.
+You can run `WeatherStation` console application from your lcoal machine and see it work.
+Search index in both regions should update almost immediately has the console application sends new data.

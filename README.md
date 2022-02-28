@@ -1,9 +1,11 @@
 # Search Index Disaster Recovery
-Azure Cognitive Search Geo-disaster recovery with near real time multi region update
-to go beyond 99.9% SLA.
+This repository is about Azure Cognitive Search Geo-disaster recovery with near real time multi region update that achieves availability beyond 99.9% SLA.
 
-Producers push data into a Geo Paired event hub which is subscribed by webjob in each region.
-The webbjob then updates their respective Search Index via Azure Search Push API.
+
+Geo replication is achieved by producers pushing data into a Geo Paired event hub which is subscribed by a WebJob in each region. 
+The WebJob then updates its respective Search Index via Azure Search Push API.
+
+[Deployment Steps](docs/Deployment.md)
 
 [Availability and business continuity in Azure Cognitive Search](https://docs.microsoft.com/en-us/azure/search/search-performance-optimization#multiple-services-in-separate-geographic-regions)
 
