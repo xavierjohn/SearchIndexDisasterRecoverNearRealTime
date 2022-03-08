@@ -74,7 +74,7 @@ Associate the Managed Identity.
 
 ### **Deploy application to App Service**
 
-Deploy your application. For this example, we will be deploying a WebJob to our App Service.
+Deploy your application. For this example, we will be deploying a WebJob to our App Service. Only the `Release` build creates the Zip file.
 
 [SearchIndexUpdateWebJob.zip](../SearchIndexUpdateWebJob/PublishOutput/SearchIndexUpdateWebJob.zip)
 
