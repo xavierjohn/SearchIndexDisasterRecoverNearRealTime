@@ -75,7 +75,7 @@ resource search 'Microsoft.Search/searchServices@2020-08-01' existing = {
   name: resourceName
 }
 
-resource eventHubNamespaceWest 'Microsoft.EventHub/namespaces@2021-11-01' = {
+resource eventHubNamespace 'Microsoft.EventHub/namespaces@2021-11-01' = {
   name: resourceName
   location: location
   sku: {
@@ -87,7 +87,7 @@ resource eventHubNamespaceWest 'Microsoft.EventHub/namespaces@2021-11-01' = {
 
 resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = if (shortRegion == 'wus2') {
   name: 'city-temprature'
-  parent: eventHubNamespaceWest
+  parent: eventHubNamespace
   properties: {
     messageRetentionInDays: 1
     partitionCount: 2
