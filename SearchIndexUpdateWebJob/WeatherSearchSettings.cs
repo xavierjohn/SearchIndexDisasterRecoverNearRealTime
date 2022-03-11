@@ -2,5 +2,5 @@
 
 public class WeatherSearchSettings : SearchServiceSettings
 {
-    public override string IndexName { get; set; } = "city-temperature";
+    public override string IndexName { get; set; } = "benchmark";
 }

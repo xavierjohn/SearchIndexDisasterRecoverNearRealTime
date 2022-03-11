@@ -34,7 +34,8 @@ public class ConvertEventHubWeatherToSearchIndex
             _logger.LogError("Deserialize failed. {json}", json);
             return Maybe<WeatherDto>.None;
         }
-        dto.updatedOn = arg.Data.EnqueuedTime;
+        dto.enqueuedTime = arg.Data.EnqueuedTime.ToUniversalTime();
+        dto.receivedTime = DateTimeOffset.UtcNow;
         return Maybe.From(dto);
     }
 

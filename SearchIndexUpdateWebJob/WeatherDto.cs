@@ -15,5 +15,11 @@ public class WeatherDto
     public double temperature { get; set; }
 
     [SimpleField(IsFilterable = true)]
-    public DateTimeOffset updatedOn { get; set; }
+    public DateTimeOffset enqueuedTime { get; set; }
+
+    [SimpleField(IsFilterable = true)]
+    public DateTimeOffset receivedTime { get; set; }
+
+    [SimpleField(IsFilterable = true)]
+    public DateTimeOffset uploadTime { get; set; }
 }

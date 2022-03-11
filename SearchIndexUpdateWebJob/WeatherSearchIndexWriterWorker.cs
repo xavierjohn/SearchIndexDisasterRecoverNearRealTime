@@ -69,6 +69,7 @@ public class WeatherSearchIndexWriterWorker : BackgroundService
         while (!cancellationToken.IsCancellationRequested)
         {
             var batch = (await _channel.Reader.ReadMultipleAsync(maxBatchSize: 1000, cancellationToken)).ToArray();
+            for (var i = 0; i < batch.Length; i++) batch[i].uploadTime = DateTimeOffset.UtcNow;
             await _searchRepository.Store(batch, CancellationToken.None);
         }
     }
