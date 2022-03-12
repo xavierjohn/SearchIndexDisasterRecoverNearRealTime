@@ -11,8 +11,8 @@ var locations = [
   }
 ]
 
-module resources 'resources.bicep' = [for location in locations : {
-  name:'alResources'
+module allResources 'resources.bicep' = [for location in locations : {
+  name:'allResources'
   scope:resourceGroup('${name}-${location.shortRegion}')
   params: {
     name: name
@@ -21,15 +21,17 @@ module resources 'resources.bicep' = [for location in locations : {
   }
 }]
 
-/*
+resource primaryEventHubNamespace 'Microsoft.EventHub/namespaces@2021-11-01' existing = {
+  name: '${name}-wus2'
+}
+
 resource disasterRecoveryConfigs 'Microsoft.EventHub/namespaces/disasterRecoveryConfigs@2021-11-01' = {
   name: name
-  parent: resources[0]/eventHubNamespace
+  parent: primaryEventHubNamespace
   properties: {
     partnerNamespace: resourceId('Microsoft.EventHub/namespaces', '${name}-eus2')
   }
   dependsOn: [
-    resources
+    allResources
   ]
 }
-*/
