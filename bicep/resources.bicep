@@ -79,6 +79,36 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
       netFrameworkVersion: 'v6.0'
       minTlsVersion: '1.2'
       http20Enabled: true
+      appSettings: [
+        {
+          'name': 'AZURE_CLIENT_ID'
+          'value': managedIdentity.properties.clientId
+        } 
+        {
+          'name': 'environmentSettings:region'
+          'value': shortRegion
+        } 
+        {
+          'name': 'eventHubSettings:CommonBlobStorageUri'
+          'value': 'https://${resourceName}${environment().suffixes.storage}/'
+        } 
+        {
+          'name': 'eventHubSettings:eventHubNamespace'
+          'value': '${name}.servicebus.windows.net'
+        } 
+        {
+          'name': 'eventHubSettings:regionSpecificBlobStorageUri'
+          'value': 'https://${resourceName}${environment().suffixes.storage}/'
+        }
+        {
+          'name': 'keyVaultSettings:keyVaultName'
+          'value': resourceName
+        }
+        {
+          'name': 'searchServiceSettings:ServiceUri'
+          'value': 'https://${resourceName}.search.windows.net'
+        }
+      ]
     }
   }
   identity: {
@@ -92,6 +122,14 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
 
 resource search 'Microsoft.Search/searchServices@2020-08-01' existing = {
   name: resourceName
+}
+
+resource secret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
+  parent: keyVault
+  name: 'SearchServiceKey'
+  properties: {
+    value: search.listAdminKeys().primaryKey
+  }
 }
 
 resource eventHubNamespace 'Microsoft.EventHub/namespaces@2021-11-01' = {
@@ -121,3 +159,4 @@ resource consumerGroupEus2 'Microsoft.EventHub/namespaces/eventhubs/consumergrou
   name: 'index-worker-eus2'
   parent: eventHub
 }
+
