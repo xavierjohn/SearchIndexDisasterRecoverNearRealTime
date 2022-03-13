@@ -62,13 +62,32 @@ resource keyVault 'Microsoft.KeyVault/vaults@2021-10-01' = {
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: resourceName
   location: location
+  kind: 'windows'
   sku: {
-    name: 'D1'
-    tier: 'Shared'
-    size: 'D1'
-    family: 'D'
-    capacity: 0
+    name: 'S1'
   }
+}
+
+resource appService 'Microsoft.Web/sites@2020-06-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    serverFarmId: appServicePlan.id
+    httpsOnly: true   
+    siteConfig: {
+      ftpsState: 'Disabled'
+      netFrameworkVersion: 'v6.0'
+      minTlsVersion: '1.2'
+      http20Enabled: true
+    }
+  }
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${managedIdentity.id}': {}
+    }
+  }
+  
 }
 
 resource search 'Microsoft.Search/searchServices@2020-08-01' existing = {

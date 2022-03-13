@@ -10,6 +10,8 @@ Please upvote the following request. [Failover compatible EH receiver](https://f
 
 [Deployment Steps](docs/Deployment.md)
 
+[Use Azure Bicep to automate deployment](bicep/usage.md)
+
 [Availability and business continuity in Azure Cognitive Search](https://docs.microsoft.com/en-us/azure/search/search-performance-optimization#multiple-services-in-separate-geographic-regions)
 
 [Azure Event Hubs - Geo-disaster recovery](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-geo-dr)
